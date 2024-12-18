@@ -1,4 +1,4 @@
-# Cześć masz napisać jak najwięcej fukncji(500). Powodzenia :)
+# Cześć masz napisać jak najwięcej fukncji(500). Powodzenia :) każdy closure i decorator liczony razy 3
 
 #1
 def square_area(x):
@@ -156,3 +156,77 @@ def name_is_here(x):
 
 assert name_is_here("Czy Kasia jest tutaj", "Kasia") == "Znalazłes na indexie 4"
 assert name_is_here("Czy Kasia jest tutaj", "Basia") == "Nie znalazles -1"
+
+#44, 45, 46 (47, 48, 49, 50 ,51, 52)
+
+def swap(funkcja):
+    def inner(name: str):
+        return  funkcja(name.swapcase())
+
+    return inner
+
+@swap
+def multiply2(x):
+    return x * 2
+
+assert multiply2("AsIa") == "aSiAaSiA"
+assert multiply2("MateuSZ") == "mATEUszmATEUsz"
+
+@swap
+def multiply3(x):
+    return x * 3
+
+assert multiply3("Jan") == "jANjANjAN"
+assert multiply3("Masza") == "mASZAmASZAmASZA"
+
+#53, 54, 55, 56, 57 ,58 (59, 60, 61, 62, 63, 64)
+def _tytul_(funckja):
+    def inner(x):
+        return funckja(x.title())
+    return inner
+
+def _podzial_(funckja):
+    def inner(x):
+        return funckja(x.split())
+    return inner
+
+
+@_tytul_
+@_podzial_
+def name_company(x: str):
+    return f'{x[0]} {x[1]} sp. z o.o.'
+
+assert name_company("geo pabieda") == "Geo Pabieda sp. z o.o."
+assert name_company("pabieda iT") == "Pabieda It sp. z o.o."
+
+@_tytul_
+@_podzial_
+def name_and_surname(x: str):
+    return f"Imię: {x[0]} Nazwisko: {x[1]}"
+
+assert name_and_surname("mati pietkiewicz") == "Imię: Mati Nazwisko: Pietkiewicz"
+assert name_and_surname("aleksandra szymborska") == "Imię: Aleksandra Nazwisko: Szymborska"
+
+#65
+
+def metraz(x: int, y: int):
+    return f"{x * y} m2 mieszkania."
+
+assert metraz(3, 4)  == "12 m2 mieszkania."
+assert metraz(5, 8)  == "40 m2 mieszkania."
+
+#66, 67, 68 (69, 70, 71)
+
+def how_many_rooms(fun):
+    def inner(b):
+        z = fun(b * 5)
+        return  f"{z} m2 mieszkania"
+
+    return inner
+
+@how_many_rooms
+def all_house(b):
+    return b
+
+assert all_house(5) == "25 m2 mieszkania"
+assert all_house(10) == "50 m2 mieszkania"
