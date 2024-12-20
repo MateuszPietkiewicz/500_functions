@@ -230,3 +230,85 @@ def all_house(b):
 
 assert all_house(5) == "25 m2 mieszkania"
 assert all_house(10) == "50 m2 mieszkania"
+
+#72,73,74 (75,76,77)
+def size_room(funkcja):
+    def inner(dlugosc, szerokosc):
+        funkcja(dlugosc, szerokosc)
+        pow = dlugosc * szerokosc
+        return  f"Powierzchnia pokoju wynosi {pow} m2."
+    return inner
+
+@size_room
+def wymiar(dlugosc, szerokosc):
+    return f"Wymiary:{dlugosc} x {szerokosc}"
+
+assert wymiar(5,4) == "Powierzchnia pokoju wynosi 20 m2."
+assert wymiar(6,5) == "Powierzchnia pokoju wynosi 30 m2."
+
+
+#78,79,80
+def zew(x):
+    def wew(y):
+        return  x + y
+    return wew
+
+dodaj_10 = zew(10)
+assert dodaj_10(20) == 30
+assert dodaj_10(50) == 60
+
+#81,82,83(84,85,86)
+def zew2(fun):
+    def wew2(x,y):
+        fun(x,y)
+        return  f"Wynik: {x + y}"
+    return wew2
+
+@zew2
+def dodawanie(x,y):
+    return x, y
+
+assert dodawanie(5,5) == "Wynik: 10"
+assert dodawanie(7,8) == "Wynik: 15"
+
+#87, 88, 89 (90,91,92)
+def zew3(fun):
+    def wew3(x,y):
+        fun(x,y)
+        return  f"Wynik: {x - y}"
+    return wew3
+
+@zew3
+def odejmowanie(x,y):
+    return x, y
+
+assert odejmowanie(5,5) == "Wynik: 0"
+assert odejmowanie(7,8) == "Wynik: -1"
+
+#93,94,95 (96,97,98)
+def zew4(fun):
+    def wew4(x,y):
+        fun(x,y)
+        return  f"Wynik: {x * y}"
+    return wew4
+
+@zew4
+def mnoz(x,y):
+    return x, y
+
+assert mnoz(5,5) == "Wynik: 25"
+assert mnoz(7,8) == "Wynik: 56"
+
+#99, 100, 101 (102,103, 103)
+def zew5(fun):
+    def wew5(x,y):
+        fun(x,y)
+        return  f"Wynik: {x / y}"
+    return wew5
+
+@zew5
+def dzielenie(x,y):
+    return x, y
+
+assert dzielenie(5,5) == "Wynik: 1.0"
+assert dzielenie(4,8) == "Wynik: 0.5"
