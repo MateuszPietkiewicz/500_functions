@@ -312,3 +312,145 @@ def dzielenie(x,y):
 
 assert dzielenie(5,5) == "Wynik: 1.0"
 assert dzielenie(4,8) == "Wynik: 0.5"
+
+#104,105,106(107,108,109)
+def zeww(fun):
+    def inner(*args):
+        fun(args)
+        kk =[]
+        for n in args:
+            nn= n + 273.15
+            kk.append(nn)
+        return  kk
+    return inner
+
+@zeww
+def kalwiny(*args):
+    return f"{args} stopni Celsjusza"
+
+assert kalwiny(0,1) == [273.15, 274.15]
+assert kalwiny(8,9 ,100) == [281.15, 282.15, 373.15]
+
+#110
+def add10(*args):
+    return [x + 10 for x in args]
+
+assert add10(0,10,20) == [10, 20, 30]
+assert add10(-10,110) == [0, 120]
+
+#111
+import datetime
+week= {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
+def tomorrow():
+    cd = datetime.datetime.now()
+    next_day = cd.isoweekday() + 1
+    if next_day == 8:
+        next_day = 1
+    return week[next_day]
+
+assert tomorrow() == week[(datetime.datetime.now().isoweekday() + 1)]
+
+#112,113,114(115,116,117)
+def tomorrow_c(func):
+    def inner(day = None):
+        if day is None:
+            cd = datetime.datetime.now()
+            tow = cd + datetime.timedelta(days=1)
+            naz = func(tow.strftime("%A"))
+            return naz
+        next_day = day + 1 if day < 7 else 1
+        return func(week[next_day])
+    return inner
+
+@tomorrow_c
+def jutro(day):
+    return f"Jutro taki dzień: {day}"
+
+assert jutro() == f"Jutro taki dzień: {week[(datetime.datetime.now().isoweekday() + 1)]}"
+assert jutro(4) == "Jutro taki dzień: Friday"
+assert jutro(7) == "Jutro taki dzień: Monday"
+
+#118
+import datetime
+week= {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
+
+def yesterday():
+    y_day = datetime.datetime.now() - datetime.timedelta(days=1)
+    day = y_day.strftime("%a")
+    return f"Wczoraj był dzień: {day}"
+
+assert yesterday() == f"Wczoraj był dzień: {(datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%a")}"
+
+#119,120,121(122,123,124)
+def yesterday1(func):
+    def inner(day = None):
+        if day is None:
+            y_day = datetime.date.today() - datetime.timedelta(days=1)
+            return func(y_day.strftime("%a"))
+        else:
+            return func(week[day-1][:3]) if day > 1 and day < 8 else func(week[8-1][:3])
+    return inner
+
+@yesterday1
+def wczoraj(day):
+    return f"Wczoraj był dzień: {day}"
+
+assert wczoraj() == f"Wczoraj był dzień: {(datetime.date.today() - datetime.timedelta(days=1)).strftime("%a")}"
+assert wczoraj(2) == "Wczoraj był dzień: Mon"
+assert wczoraj(7) == "Wczoraj był dzień: Sat"
+assert wczoraj(1) == "Wczoraj był dzień: Sun"
+
+#125
+def before_yesterday():
+    by_day = datetime.date.today()-datetime.timedelta(days=2)
+    return f"Przed wczoraj był taki dzień: {by_day.strftime("%A")}"
+
+assert before_yesterday() == f"Przed wczoraj był taki dzień: {(datetime.date.today()-datetime.timedelta(days=2)).strftime("%A")}"
+
+#126,127,128(129,130,131)
+week= {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
+def bf_yesterday(func):
+    def inner(day = None):
+        if day is None:
+            bfy_day = datetime.date.today() - datetime.timedelta(days=2)
+            return func(bfy_day.strftime("%A"))
+        else:
+            pw= (day-2)% 7
+            pw= 7 if pw == 0 else pw
+            return func(week[pw])
+    return inner
+
+@bf_yesterday
+def przedwczoraj(day):
+    return f"Przed wczoraj był taki dzień: {day}"
+
+assert przedwczoraj() == f"Przed wczoraj był taki dzień: {(datetime.date.today() - datetime.timedelta(days=2)).strftime("%A")}"
+assert przedwczoraj(1) == "Przed wczoraj był taki dzień: Saturday"
+assert przedwczoraj(2) == "Przed wczoraj był taki dzień: Sunday"
+assert przedwczoraj(3) == "Przed wczoraj był taki dzień: Monday"
+
+#132
+def after_tomorrow():
+    at_day = datetime.date.today()+ datetime.timedelta(days=2)
+    return f"Po jutrze bedzie taki dzień: {at_day.strftime("%A")}"
+assert after_tomorrow() == f"Po jutrze bedzie taki dzień: {(datetime.date.today()+ datetime.timedelta(days=2)).strftime("%A")}"
+
+#133,134,135(136,137,138)
+def after_tomorrow2(func):
+    def inner(day = None):
+        if day is None:
+            at_day = datetime.date.today() + datetime.timedelta(days=2)
+            return  func(at_day.strftime("%A"))
+        else:
+            at_day = (day + 2) % 7
+            return func(week[at_day])
+    return inner
+
+@after_tomorrow2
+def pojutrze(day):
+    return f"Po jutrze bedzie taki dzień: {day}"
+
+assert pojutrze() == f"Po jutrze bedzie taki dzień: {(datetime.date.today() + datetime.timedelta(days=2)).strftime("%A")}"
+assert pojutrze(1) == "Po jutrze bedzie taki dzień: Wednesday"
+assert pojutrze(6) == "Po jutrze bedzie taki dzień: Monday"
+assert pojutrze(7) == "Po jutrze bedzie taki dzień: Tuesday"
