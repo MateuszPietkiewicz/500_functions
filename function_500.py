@@ -454,3 +454,153 @@ assert pojutrze() == f"Po jutrze bedzie taki dzień: {(datetime.date.today() + d
 assert pojutrze(1) == "Po jutrze bedzie taki dzień: Wednesday"
 assert pojutrze(6) == "Po jutrze bedzie taki dzień: Monday"
 assert pojutrze(7) == "Po jutrze bedzie taki dzień: Tuesday"
+
+#139
+def row(y=1):
+    return [x+1 for x in range(y)]
+
+assert row() == [1]
+assert row(10) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+assert row(14) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+
+#140
+def row_():
+    return {key: value+1 for value, key in enumerate('ABCDEF')}
+
+assert row_() == {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6}
+
+#141
+def row_plane():
+    return {key: None for key in 'ABCDEF'}
+
+assert row_plane() == {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None}
+
+#142, 143, 144 (145,146,147)
+def all_plane(fun):
+    def inner(x,y):
+        fun(x,y)
+        plane = {row:{seat: None for seat in x} for row in range(1,y+1)}
+        return '\n'.join((f"{row}: {seats}" for row, seats in plane.items()))
+    return inner
+
+@all_plane
+def row_column_plane(x,y):
+    return x, y
+
+assert row_column_plane('ABCDEF', 1) == "1: {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None}"
+
+#148
+def row_planes(letters, rows):
+    return [None] + [{letter: None for letter in letters} for _ in rows]
+
+assert row_planes('ABCD', range(1,5)) == [None, {'A': None, 'B': None, 'C': None, 'D': None},
+                                         {'A': None, 'B': None, 'C': None, 'D': None},
+                                         {'A': None, 'B': None, 'C': None, 'D': None},
+                                         {'A': None, 'B': None, 'C': None, 'D': None}]
+
+#149
+air_plane = row_planes('ABCDEF', range(10))
+
+def seat_in_plane(plane,row,letter, passager):
+    plane[row][letter] = passager
+    return plane
+
+
+assert seat_in_plane(air_plane,2,"C", "Lukasz") == [None,
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': 'Lukasz', 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None},
+                                                    {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None}]
+
+#150
+def odd_or_even_number(number: int) -> str:
+    if number % 2 == 0:
+        return f"This {number} is even number."
+    else:
+        return f"This {number} is odd number."
+
+assert odd_or_even_number(0) == "This 0 is even number."
+assert odd_or_even_number(9) == "This 9 is odd number."
+assert odd_or_even_number(8) == "This 8 is even number."
+
+#151
+def is_only_digit_or_word(arg: str) -> str:
+    if arg.isalpha():
+        return "This is string."
+    elif arg.isdigit():
+        return "This is digit."
+    else:
+        return "It is deference from text and digit."
+
+assert is_only_digit_or_word("5") == "This is digit."
+assert is_only_digit_or_word("Ala") == "This is string."
+
+#152, 153, 154
+def power(x):
+    def inner(y):
+        return  x**y
+    return inner
+
+assert power(5)(2) == 25
+assert power(2)(3) == 8
+assert power(5)(3) == 125
+
+#155, 156, 157
+def sqrt_(x):
+    def inner(y):
+        return  x**(1/y)
+    return inner
+
+assert sqrt_(125)(3) == 5.0
+assert sqrt_(64)(6) == 2.0
+assert sqrt_(256)(4) == 4.0
+
+#158, 159, 160(161,162,163)
+def area_plot(fun):
+    def inner(x, y):
+        z = fun(x,y)
+        return z, x * y
+    return inner
+
+@area_plot
+def data_plot_rectangle(x,y):
+    return f" Dane: {x},{y}."
+
+assert data_plot_rectangle(5,5) == (' Dane: 5,5.', 25)
+assert data_plot_rectangle(10,5) == (' Dane: 10,5.', 50)
+assert data_plot_rectangle(1,6) == (' Dane: 1,6.', 6)
+
+
+str_method = ['capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format',
+              'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier',
+              'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower',
+              'lstrip', 'maketrans', 'partition', 'removeprefix', 'removesuffix', 'replace', 'rfind', 'rindex',
+              'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase',
+              'title', 'translate', 'upper', 'zfill']
+
+#164
+def _capitalize(example_str):
+    return example_str.capitalize()
+
+assert _capitalize("ala ma kota") == "Ala ma kota"
+assert _capitalize("kot ma ale") == "Kot ma ale"
+
+#165
+def _casefold(example_str):
+    return example_str.casefold()
+
+assert _casefold("AlA mA KOTA") == "ala ma kota"
+assert _casefold("KOT MA koTA") == "kot ma kota"
+
+#166
+def _center(example_str, long=20, chart="-"):
+    return example_str.center(long,chart)
+
+assert _center("Kot") == "--------Kot---------"
+assert _center("Koala", 10, "+") == "++Koala+++"
