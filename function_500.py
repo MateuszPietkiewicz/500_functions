@@ -1,4 +1,4 @@
-# Cześć masz napisać jak najwięcej fukncji(500). Powodzenia :) każdy closure i decorator liczony razy 3
+# Hallo, I have to write 500 function. Good luck :) each closure and decorators counted times 3
 
 #1
 def square_area(x):
@@ -604,3 +604,68 @@ def _center(example_str, long=20, chart="-"):
 
 assert _center("Kot") == "--------Kot---------"
 assert _center("Koala", 10, "+") == "++Koala+++"
+
+#167
+def _count(example_str, searched_letter):
+    return example_str.count(searched_letter)
+
+# print(_count("Ala ma KotA, Ale Nie Ali", "a")) #szuka tylko malego "a"
+
+assert _count("Ala ma KotA, Ale Nie Ali", "a") == 2
+assert _count("Ala ma KotA, Ale Nie Ali", "A") == 4
+
+#168
+def _encode(example_str, code):
+    return example_str.encode(code)
+
+assert _encode("ala", "utf-8") == b'ala'
+assert _encode("ala", "ascii") == b'ala'
+
+#169
+def _endswith(example_str, ends):
+    return example_str.endswith(ends)
+
+assert _endswith("Ala ma kota.", "a.") == True
+assert _endswith("Ala ma kota.", "b.") == False
+
+#170
+def _expandtabs(example_str,space):
+    return example_str.expandtabs(space)
+
+assert _expandtabs("Ala  ma   Kota\ti\tłzy",0) == "Ala  ma   Kotaiłzy"
+assert _expandtabs("Ala\tma\tKota\ti\tłzy",2) == "Ala ma  Kota  i łzy"
+
+#171
+def _find(example_str, find_str):
+    return example_str.find(find_str)
+
+assert (_find("Ala lata sobie z Alą", "ta")) == 6
+assert (_find("Ala lata sobie z Alą", "a")) == 2
+
+#172
+def _format(example_str,*args):
+    return example_str.format(*args)
+
+assert _format("{} ma {} i {}", "Ala", "kota", "wszy") == "Ala ma kota i wszy"
+assert _format("{} ma {} i {} oraz {}", "Ala", "kota", "wszy", "coś") == "Ala ma kota i wszy oraz coś"
+
+#173
+def _format_map(example_str, dict_map):
+    return example_str.format_map(dict_map)
+
+assert "{she} ma {pet} i {pet2}".format_map({"she":"Ala","pet":"kota","pet2":"wszy" }) == "Ala ma kota i wszy"
+assert "{she} ma {pet} i {pet2}".format_map({"she":"Ala","pet":"kota","pet2":"psy" }) == "Ala ma kota i psy"
+
+#174
+def _index(example_str, text):
+    return example_str.index(text)
+
+assert _index("ala ma kota i asia tez ma kota","ma") == 4
+assert _index("ala ma kota i asia tez ma kota","i") == 12
+
+#175
+def _isalnum(example_str):
+    return example_str.isalnum()
+
+assert _isalnum("dsdfs3234") == True
+assert _isalnum("dsdfs 3234") == False
