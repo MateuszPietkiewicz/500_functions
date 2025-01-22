@@ -408,7 +408,7 @@ def before_yesterday():
 assert before_yesterday() == f"Przed wczoraj był taki dzień: {(datetime.date.today()-datetime.timedelta(days=2)).strftime("%A")}"
 
 #126,127,128(129,130,131)
-week= {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
+weeks = {1:"Monday", 2:"Tuesday", 3:"Wednesday", 4:"Thursday", 5:"Friday", 6:"Saturday", 7:"Sunday"}
 def bf_yesterday(func):
     def inner(day = None):
         if day is None:
@@ -417,7 +417,7 @@ def bf_yesterday(func):
         else:
             pw= (day-2)% 7
             pw= 7 if pw == 0 else pw
-            return func(week[pw])
+            return func(weeks[pw])
     return inner
 
 @bf_yesterday
@@ -443,7 +443,7 @@ def after_tomorrow2(func):
             return  func(at_day.strftime("%A"))
         else:
             at_day = (day + 2) % 7
-            return func(week[at_day])
+            return func(weeks[at_day])
     return inner
 
 @after_tomorrow2
@@ -584,6 +584,7 @@ str_method = ['capitalize', 'casefold', 'center', 'count', 'encode', 'endswith',
               'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase',
               'title', 'translate', 'upper', 'zfill']
 
+
 #164
 def _capitalize(example_str):
     return example_str.capitalize()
@@ -636,11 +637,11 @@ assert _expandtabs("Ala  ma   Kota\ti\tłzy",0) == "Ala  ma   Kotaiłzy"
 assert _expandtabs("Ala\tma\tKota\ti\tłzy",2) == "Ala ma  Kota  i łzy"
 
 #171
-def _find(example_str, find_str):
+def __find(example_str, find_str):
     return example_str.find(find_str)
 
-assert (_find("Ala lata sobie z Alą", "ta")) == 6
-assert (_find("Ala lata sobie z Alą", "a")) == 2
+assert (__find("Ala lata sobie z Alą", "ta")) == 6
+assert (__find("Ala lata sobie z Alą", "a")) == 2
 
 #172
 def _format(example_str,*args):
@@ -668,4 +669,142 @@ def _isalnum(example_str):
     return example_str.isalnum()
 
 assert _isalnum("dsdfs3234") == True
-assert _isalnum("dsdfs 3234") == False
+assert _isalnum("dsdfs   3234") == False
+
+#176
+def _isalpha(example_str):
+    return example_str.isalpha()
+
+assert _isalpha("RrevfdRRTY") == True
+assert _isalpha("R3333vfdRRTY") == False
+assert _isalpha("frr  ddd") == False
+
+#177
+def _isdigit(example_str):
+    return example_str.isdigit()
+
+assert _isdigit('wwdd') == False
+assert _isdigit('3332') == True
+
+#178
+def _isidentifier(example_str):
+    return example_str.isidentifier()
+
+assert _isidentifier("ala_ma_Kota") == True
+assert _isidentifier("Kota") == True
+assert _isidentifier("ala ma Kota") == False
+
+#179
+def _islower(example_str):
+    return example_str.islower()
+
+assert _islower("fdgfg") == True
+assert _islower("FDerFF") == False
+assert _islower("FOUJO") == False
+
+#180
+def _isnumeric(example_str):
+    return example_str.isnumeric()
+
+assert _isnumeric("234343e3") == False
+assert _isnumeric("2343433") == True
+assert _isnumeric("12") == True
+
+#181
+def _isspace(example_str):
+    return example_str.isspace()
+
+assert _isspace("23 dsdf") == False
+assert _isspace("   ") == True
+
+#182
+def _istitle(example_str):
+    return example_str.istitle()
+
+assert _istitle("sdd dsdf") == False
+assert _istitle("Esa Yolo") == True
+
+#183
+def _isupper(example_str):
+    return example_str.isupper()
+
+assert _isupper("ewfew ewwe") == False
+assert _isupper("Esa Yolo") == False
+assert _isupper("ESAA ASA") == True
+
+#184
+def _join(example_str,separator):
+    return example_str.join(separator)
+
+assert _join(" ",["Ala","ma","psa","i","kota."]) == "Ala ma psa i kota."
+assert _join("%",["Ala","ma","psa","i","kota."]) == "Ala%ma%psa%i%kota."
+assert _join("*",["Ala","ma","psa","i","kota."]) == "Ala*ma*psa*i*kota."
+
+#185
+def _ljust(example_str,number,sign):
+    return example_str.ljust(number, sign)
+
+assert _ljust("Lewo",10,"*") == "Lewo******"
+assert _ljust("Siema",11,"*") == "Siema******"
+assert _ljust("Tak",12,"*") == "Tak*********"
+
+#186
+def _lstrip(example_str):
+    return example_str.lstrip()
+
+assert _lstrip("     Siema") == "Siema"
+assert _lstrip("            Siema") == "Siema"
+assert _lstrip("     Siema   ") == "Siema   "
+
+#187
+def _maketrans(example_str,letter_before, letter_after):
+    tabela = str.maketrans(letter_before, letter_after)
+    return example_str.translate(tabela)
+
+assert _maketrans("Mało","o","a") == "Mała"
+assert _maketrans("Mirka","i","a") == "Marka"
+
+#188
+def _partition(example_str, part):
+    return example_str.partition(part)
+
+assert _partition("Nasza mama lubi pomarancze i ser.","lubi") == ("Nasza mama ","lubi"," pomarancze i ser.")
+assert _partition("Nasza mama i tata lubi jajko i ser.","i") == ('Nasza mama ', 'i', ' tata lubi jajko i ser.')
+
+#189
+def _removeprefix(example_str, prefix):
+    return example_str.removeprefix(prefix)
+
+assert _removeprefix("Św. Mateusz","Św. ") == "Mateusz"
+assert _removeprefix("Św. Łukasz","Św. ") == "Łukasz"
+
+#190
+def _removesuffix(example_str, sufix):
+    return example_str.removesuffix(sufix)
+
+assert _removesuffix("Św. Mateusz Ewangelista"," Ewangelista") == "Św. Mateusz"
+assert _removesuffix("Św. Łukasz Ewangelista"," Ewangelista") == "Św. Łukasz"
+
+#191
+def _replace(example_str, before, after):
+    return example_str.replace(before, after)
+
+assert _replace("Mama lubi Kasie i Basie","si","j") == "Mama lubi Kaje i Baje"
+assert _replace("Learn Python is hard","hard","easy") == "Learn Python is easy"
+
+#192
+def _rfind(example_str, letter):
+    return example_str.rfind(letter)
+
+assert _rfind("Mama o Baćko","o") == 11
+assert _rfind("Mama o Baćko","ć") == 9
+assert _rfind("Mama o Baćko","v") == -1
+
+#193
+def _rjust(example_str, number, chart):
+    return example_str.rjust(number, chart)
+
+
+assert _rjust("Masa",10,"o") == "ooooooMasa"
+assert _rjust("Masa",10,"#") == "######Masa"
+assert _rjust("Masa",10,"0") == "000000Masa"
