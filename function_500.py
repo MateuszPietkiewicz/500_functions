@@ -733,8 +733,8 @@ assert _isupper("Esa Yolo") == False
 assert _isupper("ESAA ASA") == True
 
 #184
-def _join(example_str,separator):
-    return example_str.join(separator)
+def _join(separator,example_str):
+    return separator.join(example_str)
 
 assert _join(" ",["Ala","ma","psa","i","kota."]) == "Ala ma psa i kota."
 assert _join("%",["Ala","ma","psa","i","kota."]) == "Ala%ma%psa%i%kota."
@@ -808,3 +808,62 @@ def _rjust(example_str, number, chart):
 assert _rjust("Masa",10,"o") == "ooooooMasa"
 assert _rjust("Masa",10,"#") == "######Masa"
 assert _rjust("Masa",10,"0") == "000000Masa"
+
+#194
+def _rsplit(example_str,sep, parts):
+    return example_str.rsplit(sep, parts)
+
+assert _rsplit("Ja mam kota i psa"," ", 1) == ['Ja mam kota i', 'psa']
+assert _rsplit("Ja mam kota i psa"," ", 2) == ['Ja mam kota', 'i', 'psa']
+assert _rsplit("Ja mam kota i psa"," ", 3) == ['Ja mam', 'kota', 'i', 'psa']
+
+#195
+def _rstrip(example_str):
+    return example_str.rstrip()
+
+assert _rstrip("Faja        ") == "Faja"
+assert _rstrip(" Baja              ") == " Baja"
+
+#196, 197, 198 (199, 200, 201)
+def __lower(fun):
+    def inner(strr):
+        return  fun(strr).lower()
+    return inner
+
+@__lower
+def __lstrip(example_str):
+    return example_str.lstrip()
+
+assert __lstrip("    SiemA") == "siema"
+assert __lstrip("    BIADA ") == "biada "
+assert __lstrip("    YoLLLO  ") == "yolllo  "
+
+#202, 203, 204 (205, 206, 207)
+def __center(fun):
+    def inner(strr,long=20,chart="$"):
+        return  fun(strr).center(long, chart)
+
+    return inner
+
+@__center
+def add_suffix(example, long=10, chart="$"):
+    return f"{example} yo"
+
+assert add_suffix("Yolo") == "$$$$$$Yolo yo$$$$$$$"
+assert add_suffix("Yolos") == "$$$$$$Yolos yo$$$$$$"
+
+#208,209,210 (211,212,213)
+def __join(fun):
+    def inner(strr,sep=""):
+        return  sep.join(fun(strr))
+    return inner
+
+@__join
+def add_list(lista,sep=""):
+    example_list = []
+    for i in lista:
+        example_list.append(i)
+    return example_list
+
+assert add_list(('s','r','a','m')) == "sram"
+assert add_list(('s','m','a','r','3')) == "smar3"
